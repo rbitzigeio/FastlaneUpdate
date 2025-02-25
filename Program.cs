@@ -29,7 +29,7 @@ namespace Fastlane {
            
             subsReader.read();
             rgReader.read();
-            //admReader.read();
+            admReader.read();
             //kontakteReader.read();
             //mailReader.read();
         }

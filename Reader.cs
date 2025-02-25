@@ -63,15 +63,15 @@ namespace Fastlane
                 lineIn = sr.ReadLine();
             }
             Dictionary<String, Subscription> los = Subscription.getSubscriptions();
-            int i = 0;
             foreach (String key in los.Keys) {
                 Subscription sub = los[key];
-                Console.WriteLine(++i + " : " + sub.getId() + " / " + sub.getName()+ " / " + sub.getAlmId() + " / " + sub.getLS());
+                Console.WriteLine(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getLS());
             }
         }
 
         private void readAdm(String line) {
-            Console.WriteLine("  - Read ADM ");
+            Console.WriteLine("  - Read ADM :" + line);
+            String[]     array = line.Split(',');
         }
 
         private void readKontakt(String line) {
