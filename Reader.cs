@@ -78,12 +78,10 @@ namespace Fastlane
             Console.WriteLine("  - Read Kontakt ");
         }
 
-        private void readMail(String line) {
-            Console.WriteLine("  - Read Mail ");
-        }
+        private void readMail(String line) => Console.WriteLine("  - Read Mail ");
 
         private void readSubscription(String line) {
-            //Console.WriteLine("  - Read Subscription :" + line);
+            Console.WriteLine("  - Read Subscription :" + line);
             String[]     array = line.Split(',');
             Subscription sub   = new Subscription(array[0].Trim());
             sub.setName(array[1].Trim());
@@ -96,7 +94,7 @@ namespace Fastlane
         }
 
         private void readResourceGroup(String line) {
-            //Console.WriteLine("  - Read ResourceGroup " + line);
+            Console.WriteLine("  - Read ResourceGroup " + line);
             String[]     array = line.Split(',');
             Subscription sub   = Subscription.getSubscriptionById(array[0].Trim());
             if (sub != null) {

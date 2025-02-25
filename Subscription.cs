@@ -62,7 +62,7 @@ namespace Fastlane
         }
 
         public void setAlmId(String almid) {
-            if (_almid != null && _almid.Length == 0) {
+            if (_almid == null && almid.Length > 0) {
                 _almid = almid;
             }         
         }
@@ -72,7 +72,7 @@ namespace Fastlane
         }
 
         public void setLS(String ls) {
-            if (_ls != null && _ls.Length == 0) {
+            if (_ls == null && ls.Length > 0) {
                 _ls = ls;
             }       
         }
