@@ -7,4 +7,4 @@ Dabei wird versucht die Parameter
 - Resourcegruppen
 - LS
   
-zu interpretieren und in einer großen Liste, mit dem Identifier "Subscription IS" zu erzeugen
+zu interpretieren und in einer großen Liste, mit dem Identifier "Subscription ID", zu erzeugen
