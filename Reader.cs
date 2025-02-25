@@ -65,13 +65,21 @@ namespace Fastlane
             Dictionary<String, Subscription> los = Subscription.getSubscriptions();
             foreach (String key in los.Keys) {
                 Subscription sub = los[key];
-                Console.WriteLine(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getLS());
+                Console.WriteLine(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; " + sub.getLS());
             }
         }
 
         private void readAdm(String line) {
             Console.WriteLine("  - Read ADM :" + line);
-            String[]     array = line.Split(',');
+            String[] array = line.Split(';');
+            if (array.Length > 20) {
+                Subscription sub = new Subscription(array[2].Trim());
+                if (sub != null) {
+                    Kontakt adm = new Kontakt(array[20]);
+                    adm.isAdm(true);
+                    sub.addKontakt(adm);
+                }
+            }
         }
 
         private void readKontakt(String line) {

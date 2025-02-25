@@ -37,9 +37,15 @@ namespace Fastlane
         public void isAdm(bool isAdm) {
             _isAdm = isAdm;
         }
+        public bool isAdm() {
+            return _isAdm;
+        }
 
         public void isAdmVertreter(bool isAdmVertreter) {
             _isAdmVertreter = isAdmVertreter;
+        }
+        public bool isAdmVertreter() {
+            return _isAdmVertreter;
         }
 
         public static List<Kontakt> getListOfKontakte() {

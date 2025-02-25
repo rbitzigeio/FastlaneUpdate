@@ -97,6 +97,16 @@ namespace Fastlane
             }
         }
 
+        public String getADM() {
+            String name = null;
+            foreach (Kontakt k in _ListOfKontakte) {
+                if (k.isAdm()) {
+                    name = k.getName();
+                }              
+            }
+            return name;
+        }
+
         static public Dictionary<String, Subscription> getSubscriptions() {
             return ListOfSubscriptions;
         }
