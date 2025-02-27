@@ -26,12 +26,25 @@ namespace Fastlane {
             Reader admReader      = new Reader(folder + "\\" + props.getAdmFileName());
             Reader kontakteReader = new Reader(folder + "\\" + props.getKontakteFileName());
             Reader mailReader     = new Reader(folder + "\\" + props.getMailFileName());
-           
+            Console.WriteLine("- Read Subscriptions");
             subsReader.read();
+            Console.WriteLine("- Read ResourceGroups");
             rgReader.read();
+            Console.WriteLine("- Read ADM");
             admReader.read();
+            Console.WriteLine("- Read ADM-Vertreter");
             //kontakteReader.read();
+            Console.WriteLine("- Read Mail Mapping");
             //mailReader.read();
+
+            Dictionary<String, Subscription> los = Subscription.getSubscriptions();
+            int size = 0;
+            foreach (String key in los.Keys) {
+                size++;
+                Subscription sub = los[key];
+                Console.WriteLine(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; " + sub.getLS());
+            }
+            Console.WriteLine("Anzahl Subscriptions : " + size);
         }
     }
 

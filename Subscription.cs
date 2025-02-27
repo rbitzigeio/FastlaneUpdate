@@ -4,7 +4,7 @@ namespace Fastlane
 {
     public class Subscription {
         
-        static private Dictionary<String, Subscription> ListOfSubscriptions = new Dictionary<String, Subscription>();
+        static private Dictionary<String, Subscription> _ListOfSubscriptions = new Dictionary<String, Subscription>();
 
         private String        _id;
         private String        _name;
@@ -44,8 +44,8 @@ namespace Fastlane
 
         public void setId(String id) {
             _id = id;
-            if (!ListOfSubscriptions.ContainsKey(_id)) {
-                ListOfSubscriptions.Add(_id, this);
+            if (!_ListOfSubscriptions.ContainsKey(_id)) {
+                _ListOfSubscriptions.Add(_id, this);
             } 
         }
 
@@ -108,15 +108,32 @@ namespace Fastlane
         }
 
         static public Dictionary<String, Subscription> getSubscriptions() {
-            return ListOfSubscriptions;
+            return _ListOfSubscriptions;
+        }
+
+        static public IList<Subscription> getSubscriptionByAlmId(String id) {
+            IList<Subscription> listOfSubs = new List<Subscription>();
+            foreach (String key in _ListOfSubscriptions.Keys) {
+                Subscription sub = _ListOfSubscriptions[key];
+                if (sub != null && sub.getAlmId() != null && sub.getAlmId().Equals(id)) {
+                    listOfSubs.Add(sub);
+                }
+            }
+            return listOfSubs;
         }
 
         static public Subscription getSubscriptionById(String id) {
-            Subscription sub;
-            if (ListOfSubscriptions.TryGetValue(id, out sub)) {
-
+            Subscription target = null;
+            foreach (String key in _ListOfSubscriptions.Keys) {
+                Subscription sub = _ListOfSubscriptions[key];
+                if (sub != null && sub.getId() != null && sub.getId().Equals(id)) {
+                    target = sub;
+                }
+                if (target != null) {
+                    break;
+                }
             }
-            return sub;
+            return target;
         }
     }
 }

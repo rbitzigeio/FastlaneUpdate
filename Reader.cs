@@ -20,7 +20,7 @@ namespace Fastlane
         private String     _fileName;
 
         public Reader(String fileName) {
-            Console.WriteLine("- Reader : " + fileName);
+            //Console.WriteLine("- Reader : " + fileName);
             _fileName = fileName;
             if (fileName.EndsWith(props.getAdmFileName())) {
                 _readId = ADMID;
@@ -44,40 +44,41 @@ namespace Fastlane
         }
 
         public void read() {
-            Console.WriteLine("- Reader : " + _fileName + " Art: " + NAMES[_readId]);
+            // Console.WriteLine("- Reader : " + _fileName + " Art: " + NAMES[_readId]);
             StreamReader sr = new StreamReader(_fileName);
             //StreamWriter sw = new StreamWriter(fout);
             String lineIn = sr.ReadLine();
-            //int i = 0;
+            int i = 0;
             //StringBuilder lineOut = new StringBuilder();
             while (lineIn != null) {
-                String line = lineIn.Replace('"',' ');
-                switch(_readId) {
-                    case ADMID      : readAdm(line);           break;
-                    case KONTAKTEID : readKontakt(line);       break;
-                    case MAILID     : readMail(line);          break;
-                    case SUBSID     : readSubscription(line);  break;
-                    case RGID       : readResourceGroup(line); break;
-                    default         : Console.WriteLine("Unknown Status"); break;
-                } 
+                if (i>0) {
+                    String line = lineIn.Replace('"',' ');
+                    switch(_readId) {
+                        case ADMID      : readAdm(line);           break;
+                        case KONTAKTEID : readKontakt(line);       break;
+                        case MAILID     : readMail(line);          break;
+                        case SUBSID     : readSubscription(line);  break;
+                        case RGID       : readResourceGroup(line); break;
+                        default         : Console.WriteLine("Unknown Status"); break;
+                    } 
+                }
+                i++;
                 lineIn = sr.ReadLine();
             }
-            Dictionary<String, Subscription> los = Subscription.getSubscriptions();
-            foreach (String key in los.Keys) {
-                Subscription sub = los[key];
-                Console.WriteLine(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; " + sub.getLS());
-            }
+            sr.Close();
         }
 
         private void readAdm(String line) {
-            Console.WriteLine("  - Read ADM :" + line);
+            //Console.WriteLine("  - Read ADM :" + line);
             String[] array = line.Split(';');
             if (array.Length > 20) {
-                Subscription sub = new Subscription(array[2].Trim());
-                if (sub != null) {
-                    Kontakt adm = new Kontakt(array[20]);
-                    adm.isAdm(true);
-                    sub.addKontakt(adm);
+                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[2].Trim());
+                foreach(Subscription sub in listOfSubs) {
+                    if (sub != null) {
+                        Kontakt adm = new Kontakt(array[20]);
+                        adm.isAdm(true);
+                        sub.addKontakt(adm);
+                    }
                 }
             }
         }
@@ -86,10 +87,12 @@ namespace Fastlane
             Console.WriteLine("  - Read Kontakt ");
         }
 
-        private void readMail(String line) => Console.WriteLine("  - Read Mail ");
+        private void readMail(String line) {
+            Console.WriteLine("  - Read Mail ");
+        }
 
         private void readSubscription(String line) {
-            Console.WriteLine("  - Read Subscription :" + line);
+            //Console.WriteLine("  - Read Subscription :" + line);
             String[]     array = line.Split(',');
             Subscription sub   = new Subscription(array[0].Trim());
             sub.setName(array[1].Trim());
@@ -102,9 +105,9 @@ namespace Fastlane
         }
 
         private void readResourceGroup(String line) {
-            Console.WriteLine("  - Read ResourceGroup " + line);
-            String[]     array = line.Split(',');
-            Subscription sub   = Subscription.getSubscriptionById(array[0].Trim());
+            //Console.WriteLine("  - Read ResourceGroup " + line);
+            String[] array = line.Split(',');
+            Subscription sub = Subscription.getSubscriptionById(array[0].Trim());
             if (sub != null) {
                 sub.addResourceGroup(array[2].Trim());
                 sub.setAlmId(array[3].Trim());
