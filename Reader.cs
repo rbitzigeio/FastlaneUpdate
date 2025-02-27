@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using static System.Collections.Generic.Dictionary<string, string>;
 
 namespace Fastlane
@@ -46,12 +47,13 @@ namespace Fastlane
         public void read() {
             // Console.WriteLine("- Reader : " + _fileName + " Art: " + NAMES[_readId]);
             StreamReader sr = new StreamReader(_fileName);
-            //StreamWriter sw = new StreamWriter(fout);
             String lineIn = sr.ReadLine();
             int i = 0;
-            //StringBuilder lineOut = new StringBuilder();
             while (lineIn != null) {
                 if (i>0) {
+                    if (_readId == ADMID && i == 1180) {
+                        Console.WriteLine(lineIn);
+                    }
                     String line = lineIn.Replace('"',' ');
                     switch(_readId) {
                         case ADMID      : readAdm(line);           break;
@@ -71,23 +73,17 @@ namespace Fastlane
         private void readAdm(String line) {
             //Console.WriteLine("  - Read ADM :" + line);
             String[] array = line.Split(';');
-            if (array.Length > 20) {
-                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[2].Trim());
+            if (array.Length == 4) {
+                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[0].Trim());
                 foreach(Subscription sub in listOfSubs) {
                     if (sub != null) {
-                        Kontakt adm = null;
-                        if (array.Length==137 && array[136] != null && array[136].Length > 0) {
-                            adm = new Kontakt(array[136]);
-                        } else {
-                            adm = new Kontakt(array[20]);
-                        }
+                        Kontakt adm =new Kontakt(array[3]);
                         adm.isAdm(true);
                         sub.addKontakt(adm);
                     }
                 }
             }
         }
-
         private void readKontakt(String line) {
             Console.WriteLine("  - Read Kontakt ");
         }
