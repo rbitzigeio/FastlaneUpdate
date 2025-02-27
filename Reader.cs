@@ -75,7 +75,12 @@ namespace Fastlane
                 IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[2].Trim());
                 foreach(Subscription sub in listOfSubs) {
                     if (sub != null) {
-                        Kontakt adm = new Kontakt(array[20]);
+                        Kontakt adm = null;
+                        if (array.Length==137 && array[136] != null && array[136].Length > 0) {
+                            adm = new Kontakt(array[136]);
+                        } else {
+                            adm = new Kontakt(array[20]);
+                        }
                         adm.isAdm(true);
                         sub.addKontakt(adm);
                     }
