@@ -15,6 +15,7 @@ namespace Fastlane
         private String MailFileName;
         private String SubscriptionsFileName;
         private String ResourcegroupsFileName;
+        private  String UpdateFileName;
         
         public Properties() {
             string   homePath = Environment.GetEnvironmentVariable("USERPROFILE");
@@ -36,6 +37,8 @@ namespace Fastlane
                                 SubscriptionsFileName = s[1];
                             } else if (s[0].Equals("RESOURCEGROUPS")) {
                                 ResourcegroupsFileName = s[1];
+                            } else if (s[0].Equals("UPDATE_FILE")) {
+                                UpdateFileName = s[1];
                             }
                         }
                     }
@@ -90,13 +93,19 @@ namespace Fastlane
             SubscriptionsFileName = fileName;
         }
 
-         public String getResourcegroupsFileName() {
+        public String getResourcegroupsFileName() {
             return ResourcegroupsFileName;
         }
 
         public void setResourcegroupsFileName(String fileName) {
             ResourcegroupsFileName = fileName;
         }
+    public String getUpdateFileName() {
+            return UpdateFileName;
+        }
 
+        public void setUpdateFileName(String fileName) {
+            UpdateFileName = fileName;
+        }
     }
 }
