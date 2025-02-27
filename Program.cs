@@ -44,7 +44,7 @@ namespace Fastlane {
             String output = props.getUpdateFileName();
             StreamWriter sw = new StreamWriter(folder + "\\" + output);
             StringBuilder lineOut = new StringBuilder();
-            lineOut.Append("ID; Name; ALMID; ADM; ADM-Vertreter");
+            lineOut.Append("ID; Name; ALMID; ADM; ADM-Vertreter; LS");
             sw.WriteLine(lineOut.ToString());
             Dictionary<String, Subscription> los = Subscription.getSubscriptions();
             int size = 0;
@@ -53,7 +53,7 @@ namespace Fastlane {
                 size++;
                 lineOut.Clear();
                 Subscription sub = los[key];
-                lineOut.Append(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; " + sub.getLS());
+                lineOut.Append(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; ;" + sub.getLS());
                 sw.WriteLine(lineOut.ToString());
             }
             sw.Close();

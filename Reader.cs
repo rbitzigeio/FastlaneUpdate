@@ -51,9 +51,6 @@ namespace Fastlane
             int i = 0;
             while (lineIn != null) {
                 if (i>0) {
-                    if (_readId == ADMID && i == 1180) {
-                        Console.WriteLine(lineIn);
-                    }
                     String line = lineIn.Replace('"',' ');
                     switch(_readId) {
                         case ADMID      : readAdm(line);           break;
@@ -85,7 +82,21 @@ namespace Fastlane
             }
         }
         private void readKontakt(String line) {
-            Console.WriteLine("  - Read Kontakt ");
+            //Console.WriteLine("  - Read Kontakt ");
+            Console.WriteLine(line);
+            /*
+            String[] array = line.Split(';');
+            if (array.Length == 4) {
+                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[0].Trim());
+                foreach(Subscription sub in listOfSubs) {
+                    if (sub != null) {
+                        Kontakt adm =new Kontakt(array[3]);
+                        adm.isAdm(true);
+                        sub.addKontakt(adm);
+                    }
+                }
+            }
+            */
         }
 
         private void readMail(String line) {
