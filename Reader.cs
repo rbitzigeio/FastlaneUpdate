@@ -76,27 +76,31 @@ namespace Fastlane
                     if (sub != null) {
                         Kontakt adm =new Kontakt(array[3]);
                         adm.isAdm(true);
+                        adm.isAdmVertreter(false);
                         sub.addKontakt(adm);
                     }
                 }
             }
         }
         private void readKontakt(String line) {
-            //Console.WriteLine("  - Read Kontakt ");
-            Console.WriteLine(line);
-            /*
             String[] array = line.Split(';');
-            if (array.Length == 4) {
-                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[0].Trim());
+            if (array != null && array.Length > 4) {
+                IList<Subscription> listOfSubs = Subscription.getSubscriptionByAlmId(array[4].Trim());
                 foreach(Subscription sub in listOfSubs) {
                     if (sub != null) {
-                        Kontakt adm =new Kontakt(array[3]);
-                        adm.isAdm(true);
-                        sub.addKontakt(adm);
+                        if (array.Length > 12) {
+                            if (array[11].Contains("ADM-Vertreter")) {
+                                Kontakt adm =new Kontakt(array[12]);
+                                adm.isAdm(false);
+                                adm.isAdmVertreter(true);
+                                adm.setEMail(array[12]);
+                                sub.addKontakt(adm);
+                            }
+                        }
+                        
                     }
                 }
             }
-            */
         }
 
         private void readMail(String line) {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Text;
 
 namespace Fastlane {
@@ -38,7 +39,7 @@ namespace Fastlane {
             Console.WriteLine("- Read ADM");
             admReader.read();
             Console.WriteLine("- Read ADM-Vertreter");
-            //kontakteReader.read();
+            kontakteReader.read();
             Console.WriteLine("- Read Mail Mapping");
             //mailReader.read();
             String output = props.getUpdateFileName();
@@ -51,10 +52,31 @@ namespace Fastlane {
             Console.WriteLine("- Write Update File");
             foreach (String key in los.Keys) {
                 size++;
-                lineOut.Clear();
                 Subscription sub = los[key];
-                lineOut.Append(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; ;" + sub.getLS());
-                sw.WriteLine(lineOut.ToString());
+                IList<Kontakt> listOfKontakte = sub.getListOfKontakte();
+                if (sub != null && sub.getAlmId() != null && sub.getAlmId().Equals("SPL-3041")) {
+                    Console.WriteLine("Check!");
+                }  
+                if (listOfKontakte != null) {
+                    foreach (Kontakt kontakt in listOfKontakte) {
+                        lineOut.Clear();   
+                        String adm = sub.getADM();
+                        String admvertreter = null;
+                        if (kontakt.isAdmVertreter()) {
+                            admvertreter = kontakt.getEMail();
+                            adm = "";
+                        } else {
+                            admvertreter = "";
+                        }
+                        lineOut.Append(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + adm + "; " + admvertreter + "; " + sub.getLS());
+                        sw.WriteLine(lineOut.ToString());
+                    }  
+                }  else {
+                    lineOut.Clear();
+                    lineOut.Append(sub.getId() + "; " + sub.getName() + "; " + sub.getAlmId() + "; " + sub.getADM() + "; ;" + sub.getLS());
+                    sw.WriteLine(lineOut.ToString());
+                }                
+                
             }
             sw.Close();
             Console.WriteLine("Anzahl Subscriptions : " + size);

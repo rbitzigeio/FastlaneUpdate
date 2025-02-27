@@ -107,6 +107,16 @@ namespace Fastlane
             return name;
         }
 
+        public IList<String> getADMVertreter() {
+            IList<String> listOfVertreter = new List<String>();
+            foreach (Kontakt k in _ListOfKontakte) {
+                if (k.isAdmVertreter()) {
+                    listOfVertreter.Add(k.getName());
+                }              
+            }
+            return listOfVertreter;
+        }
+
         static public Dictionary<String, Subscription> getSubscriptions() {
             return _ListOfSubscriptions;
         }
