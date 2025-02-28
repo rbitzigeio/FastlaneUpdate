@@ -54,9 +54,6 @@ namespace Fastlane {
                 size++;
                 Subscription sub = los[key];
                 IList<Kontakt> listOfKontakte = sub.getListOfKontakte();
-                if (sub != null && sub.getAlmId() != null && sub.getAlmId().Equals("SPL-3041")) {
-                    Console.WriteLine("Check!");
-                }  
                 if (listOfKontakte != null) {
                     foreach (Kontakt kontakt in listOfKontakte) {
                         lineOut.Clear();   

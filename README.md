@@ -21,9 +21,10 @@ einzelnen Zellen, ist nach der Aktualisierung eine Reduktion der Daten auf die 4
 - Applikationsverantwortlicher
 - letzte Spalte mit E-Mail Adresse 
 durchzuführen und in eine Datei im CSV-Format zu exportieren.
+D.h. nach der Aktualisierung der Daten aus iShare ist diese Exceldatei zu speichern. Anschließend wird die Datei mit "Speichern unter" in ein CSV-Format überführt. In dieser CSV-Datei erfolgt die Löschung der überflüssigen Spalten, so dass nbur noch die 4 Spalten in der CSV-Datei übrig bleiben. 
+Nach der Aktualisierung der Konakte aus dem iShare Folder, ist eine Ersetzung des Zeichens ";" innerhalb der Zellen notwendig. Bei einem Export der Exceldaten in eine CSV-Datei wird das Zeichen ";" als Trennzeichen interpretiert. Somit darf dieses Zeichen nicht innerhalb von Zellen erscheinen.
 
-Die Daten für Subscptions und ResourceGroups kommen aus dem Azure Portal / Resource Graph Explorer und werden dort mit 
-Hilfe zweier Queries erzeugt. 
+Die Daten für Subscptions und ResourceGroups kommen aus dem Azure Portal / Resource Graph Explorer und werden dort mit Hilfe zweier Queries erzeugt. 
 Die Verbindung der Datentöpfe Azure und IT-AM erfolgt über die ALM-ID (ICTO, ITR oder SPL). Dabei ist zu beachten, dass 
 für die Subscription der Infrastruktur (Plattform) das Namenskürzel "-infra-" im Subscriptionnamen genutzt wird. In IT-AM 
 wird die Azure Infrastruktur unter der ID "SPL-3041" geführt. Bei der Query zur Verarbeitung der Subscriptions wird dieses 
